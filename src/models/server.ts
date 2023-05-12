@@ -1,5 +1,5 @@
 import express, {Application} from 'express'
-import { urlencoded, json } from 'express';
+import { urlencoded } from 'express';
 import  path  from 'path';
 import routesUsuarios from '../routes/usuario.routes'
 import routesProdutos from '../routes/produtos.routes'
@@ -8,22 +8,25 @@ import cors from 'cors'
 import { Produto } from './produto';
 import { Usuario } from './usuario';
 import { Categoria } from './categorias';
+import 'dotenv/config'
 
 class Server {
     private app: Application;
     private port: string;
+    private node_env: string;
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT || '3005';
+        this.port = process.env.PORT || '3000';
+        this.node_env = process.env.NODE_ENV || 'desenvolvedor';
         this.middlewares();
         this.routes();
         this.conectarDB();
     }
 
     listen() {
-        this.app.listen(this.port, () => {
-            console.log('Aplicação está no ar', this.port);
+        this.app.listen(this.port || 3000, () => {
+            console.log('Aplicação está no ar', this.port, 'você está conectado como:', this.node_env );
         })
     }
 

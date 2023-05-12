@@ -22,17 +22,19 @@ const cors_1 = __importDefault(require("cors"));
 const produto_1 = require("./produto");
 const usuario_1 = require("./usuario");
 const categorias_1 = require("./categorias");
+require("dotenv/config");
 class Server {
     constructor() {
         this.app = (0, express_1.default)();
-        this.port = process.env.PORT || '3005';
+        this.port = process.env.PORT || '3000';
+        this.node_env = process.env.NODE_ENV || 'desenvolvedor';
         this.middlewares();
         this.routes();
         this.conectarDB();
     }
     listen() {
-        this.app.listen(this.port, () => {
-            console.log('Aplicação está no ar', this.port);
+        this.app.listen(this.port || 3000, () => {
+            console.log('Aplicação está no ar', this.port, 'você está conectado como:', this.node_env);
         });
     }
     middlewares() {
